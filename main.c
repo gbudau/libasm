@@ -6,7 +6,7 @@
 /*   By: gbudau <gbudau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 23:21:24 by gbudau            #+#    #+#             */
-/*   Updated: 2020/08/01 23:44:01 by gbudau           ###   ########.fr       */
+/*   Updated: 2020/08/10 22:37:20 by gbudau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <assert.h>
 #include <limits.h>
 #include "libasm.h"
+
 
 static void	test_ft__strlen(const char *str)
 {
@@ -30,7 +31,6 @@ static void	tests_ft__strlen(void)
 	test_ft__strlen("Hello, world!\n");
 }
 
-/*
 static void test_equal_ft__strcmp(const char *str)
 {
 	assert(ft__strcmp(str, str) == strcmp(str, str));
@@ -52,10 +52,10 @@ static void	tests_ft__strcmp(void)
 	test_diff_ft__strcmp("Hola", "H");
 	test_diff_ft__strcmp("Hello, world!\n", "Hello, 42!");
 }
-*/
 
 int		main(void)
 {
 	tests_ft__strlen();
-	//tests_ft__strcmp();
+	tests_ft__strcmp();
+	printf("All tests passed\n");
 }

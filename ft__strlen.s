@@ -1,29 +1,10 @@
-section.text:
-	global	ft__strlen
+		global		ft__strlen			; make ft__strlen visible by linker
 
+		section .text:					; specify start of read only part
 ft__strlen:
-			push	rdi				; save the registers that we will use
-			push	rcx
-
-			xor		rcx, rcx		; set rcx to 0
-			not		rcx				; set rcx to -1 or 18446744073709551615
-
-			xor		al, al			; the byte that we compare to is zero
-									; C end of string '\0' so set 'al' to zero
-
-			cld						; clear direction flag
-	repne	scasb					; scan string compare 'al' with byte at 'rdi'
-									; repeat if not equal to the value or 'al'
-
-			not		rcx				; we started from -1 then decreased until
-									; after 'al' was found so the value is '- strlen - 2'
-									; or 'strlen + 2'
-									; doing 'not' its like abs(strlen) - 1 so  now we have
-									; rcx = strlen + 1
-
-			lea		rax, [rcx-1]	; store 'rcx-1' into 'rax'
-
-			pop		rcx				; restore the registers that we used
-			pop		rdi
-
-			ret						; done
+		mov		rax, -1					; set rax to -1 (will use it as index)
+.loop:
+		cmp		byte [rdi + rax + 1], 0	; check if the char at s1 + idx + 1 is zero
+		lea		rax, [rax + 1]			; increment rax, lea does not alter flags
+		jne		.loop					; keep looping if string has not reach end
+		ret								; return rax which contain the length of string

@@ -1,12 +1,12 @@
 NAME = libasm.a
-AS = nasm
-CFLAGS = -Wall -Werror -Wextra
 AR = ar
 ARFLAGS = -rcs
+AS = nasm
 ASFLAGS = -f elf64
+CFLAGS = -Wall -Werror -Wextra
 CC = gcc
 
-AS_OBJ = ft__strlen.o
+AS_OBJ = ft__strlen.o ft__strcmp.o
 C_SRC = main.c
 
 all: $(NAME)
@@ -26,6 +26,6 @@ fclean: clean
 re: fclean all
 
 test: $(NAME) $(C_SRC)
-	$(CC) $(C_SRC) -L. -lasm -o $@ $(NAME)
+	$(CC) $(CFLAGS) $(C_SRC) -L. -lasm -o $@ $(NAME)
 	./$@
 	$(RM) $@
