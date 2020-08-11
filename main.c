@@ -6,7 +6,7 @@
 /*   By: gbudau <gbudau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 23:21:24 by gbudau            #+#    #+#             */
-/*   Updated: 2020/08/11 21:15:35 by gbudau           ###   ########.fr       */
+/*   Updated: 2020/08/11 23:40:07 by gbudau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <string.h>
 #include <assert.h>
 #include <limits.h>
+#include <stdlib.h>
+#include <errno.h>
 #include "libasm.h"
 #define BUFFER_SIZE 128
 
@@ -63,7 +65,10 @@ static void	tests_ft__strcmp(void)
 	test_equal_ft__strcmp("Hola");
 	test_equal_ft__strcmp("Hello, world!\n");
 	test_diff_ft__strcmp("", "1");
+	test_diff_ft__strcmp("", "");
+	test_diff_ft__strcmp("", "1124asdfasdfp;ap");
 	test_diff_ft__strcmp("1", "2");
+	test_diff_ft__strcmp("112141241414", "2");
 	test_diff_ft__strcmp("Hola", "H");
 	test_diff_ft__strcmp("Hello, world!\n", "Hello, 42!");
 }
@@ -88,10 +93,32 @@ static void tests_ft__strcpy(void)
 	test_ft__strcpy("123456abc");
 }
 
+static void test_ft__strdup(const char *str)
+{
+	char	*ptr_one = strdup(str);
+	char	*ptr_two = strdup(str);
+	size_t	len_one = strlen(ptr_one);
+	size_t	len_two = strlen(ptr_two);
+
+	assert(len_one == len_two);
+	assert(memcmp(ptr_one, ptr_two, len_one) == 0);
+	free(ptr_one);
+	free(ptr_two);
+}
+
+static void	tests_ft__strdup(void)
+{
+	test_ft__strdup("");
+	test_ft__strdup("a");
+	test_ft__strdup("Hello\n");
+	test_ft__strdup("123456abc");
+}
+
 int		main(void)
 {
 	tests_ft__strlen();
 	tests_ft__strcmp();
 	tests_ft__strcpy();
+	tests_ft__strdup();
 	printf("All tests passed\n");
 }

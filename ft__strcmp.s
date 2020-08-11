@@ -7,11 +7,11 @@ ft__strcmp:
 		xor		rdx, rdx					; set rdx to 0, use it to store dst chars
 
 .cmp_loop:
-		mov		al, byte [rdi + rcx]		; move first char of first str into rax
-		mov		dl, byte [rsi + rcx]		; move first char of sec str into rdx
-		test	al, al						; test if al is 0
+		mov		al, byte [rdi + rcx]		; move char of first str addr + counter into rax
+		mov		dl, byte [rsi + rcx]		; move char of sec str addr + counter into rdx
+		test	al, al						; test if al is 0 (first string null terminator)
 		je		.done						; jump to done if its 0
-		test	dl, dl						; test if dl is 0
+		test	dl, dl						; test if dl is 0 (second string null terminator)
 		je		.done						; jump to done if its 0
 		cmp		al, dl						; compare the two characters
 		jne		.done						; jump to done if not equal

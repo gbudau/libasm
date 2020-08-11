@@ -6,7 +6,8 @@ ASFLAGS = -f elf64 -g -F dwarf
 CFLAGS = -Wall -Werror -Wextra -g
 CC = gcc
 
-AS_OBJ = ft__strlen.o ft__strcmp.o ft__strcpy.o
+AS_OBJ = ft__strlen.o ft__strcmp.o ft__strcpy.o \
+		 ft__strdup.o
 C_SRC = main.c
 
 all: $(NAME)
@@ -29,4 +30,4 @@ test: $(NAME) $(C_SRC)
 	$(CC) $(CFLAGS) $(C_SRC) -L. -lasm -o $@ $(NAME)
 	./$@
 	#lldb ./$@
-	$(RM) $@
+	#$(RM) $@
