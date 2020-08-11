@@ -2,13 +2,9 @@
 
 		section .text:
 ft__strcmp:
-		push	rsi							; save rsi
-		push	rdi							; save rdi on stack
-		push	rcx							; save rcx on stack
-		push	rdx							; save rdx on stack
-		xor		rcx, rcx					; use rcx as counter
-		xor		rax, rax					; set rax to 0
-		xor		rdx, rdx					; set rdx to 0
+		xor		rcx, rcx					; set rcx to 0, use it as counter
+		xor		rax, rax					; set rax to 0, use it to store src chars
+		xor		rdx, rdx					; set rdx to 0, use it to store dst chars
 
 .cmp_loop:
 		mov		al, byte [rdi + rcx]		; move first char of first str into rax
@@ -23,8 +19,4 @@ ft__strcmp:
 		jmp		.cmp_loop					; keep looping
 .done:
 		sub		rax, rdx					; substract the two characters
-		pop		rdx							; restore rdx
-		pop		rcx							; restore rcx
-		pop		rdi							; restore rdi
-		pop		rsi							; restore rsi
 		ret									; return

@@ -2,8 +2,6 @@
 
 			section		.text
 ft__strcpy:
-			push		rsi
-			push		rdi
 			cld						; clear direction flag
 
 .cpy_loop:
@@ -12,7 +10,5 @@ ft__strcpy:
 			or			al, al		; set condition flag if al is zero
 			jnz			.cpy_loop	; if not past terminating zero, continue
 
-			pop			rdi
-			pop			rsi
 			mov			rax, rdi	; copy dst address to rax to return it
 			ret
