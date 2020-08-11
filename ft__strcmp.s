@@ -2,26 +2,29 @@
 
 		section .text:
 ft__strcmp:
-		mov		dl, byte [rdi]			; copy first char of s1 into rdx
-		xor		eax, eax				; set eax to 0
-		mov		r8b, byte [rsi]			; copy first char of s2 into r8
-		test	dl, dl					; check if rdx is 0 (end of first string)
-		je		.done					; jump to .done if it is
-		mov		ecx, 1					; move 1 into ecx (will use this as counter)
-.loop:
-		test	r8b, r8b				; check if r8 is zero (end of second string)
-		je		.diff					; jump to .diff if its zero
-		cmp		dl, r8b					; compare the two chars at current index
-		jne		.diff					; if they are not equal jump to .diff
-		movzx	edx, byte [rdi + rcx]	; move the char from s1 + index into edx, zero extend
-		movzx	r8d, byte [rsi + rcx]	; move the char from s2 + index into r8d, zero extend
-		add		rcx, 1					; increment counter
-		test	dl, dl					; test if fist first string reach end
-		jne		.loop					; jump to .loop (keep looping) if not
-		jmp		.done					; jump to .done if it reach the end
-.diff:
-		movsx	eax, dl					; move the char from s1 + index into eax, sign extend
+		push	rsi							; save rsi
+		push	rdi							; save rdi on stack
+		push	rcx							; save rcx on stack
+		push	rdx							; save rdx on stack
+		xor		rcx, rcx					; use rcx as counter
+		xor		rax, rax					; set rax to 0
+		xor		rdx, rdx					; set rdx to 0
+
+.cmp_loop:
+		mov		al, byte [rdi + rcx]		; move first char of first str into rax
+		mov		dl, byte [rsi + rcx]		; move first char of sec str into rdx
+		test	al, al						; test if al is 0
+		je		.done						; jump to done if its 0
+		test	dl, dl						; test if dl is 0
+		je		.done						; jump to done if its 0
+		cmp		al, dl						; compare the two characters
+		jne		.done						; jump to done if not equal
+		add		rcx, 1						; increment the counter
+		jmp		.cmp_loop					; keep looping
 .done:
-		movsx	ecx, r8b				; move the char from s2 + index into ecx, sign extend
-		sub		eax, ecx				; substract the char at s1 + index with s2 + index
-		ret								; return the value of substraction
+		sub		rax, rdx					; substract the two characters
+		pop		rdx							; restore rdx
+		pop		rcx							; restore rcx
+		pop		rdi							; restore rdi
+		pop		rsi							; restore rsi
+		ret									; return
