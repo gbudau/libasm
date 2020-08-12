@@ -1,6 +1,6 @@
 		global	ft__strcmp
 
-		section .text:
+		section .text
 ft__strcmp:
 		xor		rcx, rcx					; set rcx to 0, use it as counter
 		xor		rax, rax					; set rax to 0, use it to store src chars

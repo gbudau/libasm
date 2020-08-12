@@ -7,7 +7,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 CC = gcc
 
 AS_OBJ = ft__strlen.o ft__strcmp.o ft__strcpy.o \
-		 ft__strdup.o
+		 ft__strdup.o ft__write.o
 C_SRC = main.c
 
 all: $(NAME)

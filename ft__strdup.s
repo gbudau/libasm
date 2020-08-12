@@ -17,11 +17,12 @@ ft__strdup:
 		mov		rcx, rax			; save address of allocated space into rcx
 .copy:
 		mov		rdi, rax			; set dst to malloc return address
-		pop		rsi					; restore rdi into rsi
+		pop		rsi					; store rdi from stack into rsi
 		call	ft__strcpy			; copy string from src to dst
 .done:
 		mov		rax, rcx			; set rax to address of allocated memory
 		ret							; return the address of allocated memory
 
 .error:
-		ret							; return in case of error, rax will be NULL
+		pop		rdi					; restore rdi
+		ret							; return, in case of error rax will be NULL

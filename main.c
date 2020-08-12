@@ -6,7 +6,7 @@
 /*   By: gbudau <gbudau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 23:21:24 by gbudau            #+#    #+#             */
-/*   Updated: 2020/08/12 00:19:52 by gbudau           ###   ########.fr       */
+/*   Updated: 2020/08/12 22:43:16 by gbudau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,23 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <unistd.h>
 #include "libasm.h"
 #define BUFFER_SIZE 128
 
 static void	test_ft__strlen(const char *str)
 {
-	size_t len_one;
-	size_t len_two;
+	size_t len_one = ft__strlen(str);
+	size_t len_two = strlen(str);
 
-	len_one = ft__strlen(str);
-	len_two = strlen(str);
 	assert(len_one == len_two);
 }
 
 static void test_equal_ft__strcmp(const char *str)
 {
-	int	ret_one;
-	int	ret_two;
+	int ret_one = ft__strcmp(str, str);
+	int ret_two = strcmp(str, str);
 
-	ret_one = ft__strcmp(str, str);
-	ret_two = strcmp(str, str);
 	if (ret_two < 0)
 		assert(ret_one < 0);
 	else if (ret_two > 0)
@@ -46,11 +43,9 @@ static void test_equal_ft__strcmp(const char *str)
 
 static void test_diff_ft__strcmp(const char *s1, const char *s2)
 {
-	int	ret_one;
-	int	ret_two;
+	int ret_one = ft__strcmp(s1, s2);
+	int ret_two = strcmp(s1, s2);
 
-	ret_one = ft__strcmp(s1, s2);
-	ret_two = strcmp(s1, s2);
 	if (ret_two < 0)
 		assert(ret_one < 0);
 	else if (ret_two > 0)
@@ -79,12 +74,15 @@ static void test_ft__strcpy(const char *str)
 static void test_ft__strdup(const char *str)
 {
 	char	*ptr_one = ft__strdup(str);
+
 	if (ptr_one == NULL)
 	{
 		printf("Memory allocation error\n");
 		return ;
 	}
+
 	char	*ptr_two = strdup(str);
+
 	if (ptr_two == NULL)
 	{
 		free(ptr_one);
@@ -99,6 +97,25 @@ static void test_ft__strdup(const char *str)
 	assert(memcmp(ptr_one, ptr_two, len_one) == 0);
 	free(ptr_one);
 	free(ptr_two);
+}
+
+static void	test_ft__write(const char *str, int fd)
+{
+	size_t len = str ? strlen(str) : 1;
+
+	errno = 0;
+	printf("ft__write: |");
+	ssize_t ret_one = ft__write(fd, str, len);
+	int		errno_one = errno;
+	printf("|\n");
+
+	errno = 0;
+	printf("    write: |");
+	ssize_t ret_two = write(fd, str, len);
+	int		errno_two = errno;
+	printf("|\n");
+	assert(ret_one == ret_two);
+	assert(errno_one == errno_two);
 }
 
 static void	tests_ft__strlen(void)
@@ -141,11 +158,23 @@ static void	tests_ft__strdup(void)
 	test_ft__strdup("123456abc");
 }
 
+static void	tests_ft__write(void)
+{
+	test_ft__write("", 1);
+	test_ft__write("a", 1);
+	test_ft__write("Hello", 1);
+	test_ft__write("123456abc", 1);
+	test_ft__write("Hello", 123456);
+	test_ft__write(NULL, 1000);
+}
+
 int		main(void)
 {
 	tests_ft__strlen();
 	tests_ft__strcmp();
 	tests_ft__strcpy();
 	tests_ft__strdup();
+	setbuf(stdout, NULL);
+	tests_ft__write();
 	printf("All tests passed\n");
 }
