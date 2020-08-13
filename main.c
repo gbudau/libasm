@@ -6,7 +6,7 @@
 /*   By: gbudau <gbudau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 23:21:24 by gbudau            #+#    #+#             */
-/*   Updated: 2020/08/13 21:00:15 by gbudau           ###   ########.fr       */
+/*   Updated: 2020/08/13 21:04:44 by gbudau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ static void	test_ft_write(const char *str, int fd)
 	printf("|\n");
 
 	errno = 0;
-	printf("    write: |");
+	printf("   write: |");
 	ssize_t ret_two = write(fd, str, len);
 	int		errno_two = errno;
 	printf("|\n");
