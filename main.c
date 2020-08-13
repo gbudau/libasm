@@ -6,7 +6,7 @@
 /*   By: gbudau <gbudau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 23:21:24 by gbudau            #+#    #+#             */
-/*   Updated: 2020/08/13 20:29:22 by gbudau           ###   ########.fr       */
+/*   Updated: 2020/08/13 21:00:15 by gbudau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@
 #include <fcntl.h>
 #define BUFFER_SIZE 128
 
-static void	test_ft__strlen(const char *str)
+static void	test_ft_strlen(const char *str)
 {
-	size_t len_one = ft__strlen(str);
+	size_t len_one = ft_strlen(str);
 	size_t len_two = strlen(str);
 
 	assert(len_one == len_two);
 }
 
-static void test_equal_ft__strcmp(const char *str)
+static void test_equal_ft_strcmp(const char *str)
 {
-	int ret_one = ft__strcmp(str, str);
+	int ret_one = ft_strcmp(str, str);
 	int ret_two = strcmp(str, str);
 
 	if (ret_two < 0)
@@ -44,9 +44,9 @@ static void test_equal_ft__strcmp(const char *str)
 		assert(ret_one == 0);
 }
 
-static void test_diff_ft__strcmp(const char *s1, const char *s2)
+static void test_diff_ft_strcmp(const char *s1, const char *s2)
 {
-	int ret_one = ft__strcmp(s1, s2);
+	int ret_one = ft_strcmp(s1, s2);
 	int ret_two = strcmp(s1, s2);
 
 	if (ret_two < 0)
@@ -57,7 +57,7 @@ static void test_diff_ft__strcmp(const char *s1, const char *s2)
 		assert(ret_one == 0);
 }
 
-static void test_ft__strcpy(const char *str)
+static void test_ft_strcpy(const char *str)
 {
 	char	buffer_one[BUFFER_SIZE];
 	char	buffer_two[BUFFER_SIZE];
@@ -68,15 +68,15 @@ static void test_ft__strcpy(const char *str)
 		return ;
 	}
 	memset(buffer_one, 'K', BUFFER_SIZE);
-	ft__strcpy(buffer_one, str);
+	ft_strcpy(buffer_one, str);
 	memset(buffer_two, 'K', BUFFER_SIZE);
 	strcpy(buffer_two, str);
 	assert(memcmp(buffer_one, buffer_two, BUFFER_SIZE) == 0);
 }
 
-static void test_ft__strdup(const char *str)
+static void test_ft_strdup(const char *str)
 {
-	char	*ptr_one = ft__strdup(str);
+	char	*ptr_one = ft_strdup(str);
 
 	if (ptr_one == NULL)
 	{
@@ -102,13 +102,13 @@ static void test_ft__strdup(const char *str)
 	free(ptr_two);
 }
 
-static void	test_ft__write(const char *str, int fd)
+static void	test_ft_write(const char *str, int fd)
 {
 	size_t len = str ? strlen(str) : 1;
 
 	errno = 0;
-	printf("ft__write: |");
-	ssize_t ret_one = ft__write(fd, str, len);
+	printf("ft_write: |");
+	ssize_t ret_one = ft_write(fd, str, len);
 	int		errno_one = errno;
 	printf("|\n");
 
@@ -121,7 +121,7 @@ static void	test_ft__write(const char *str, int fd)
 	assert(errno_one == errno_two);
 }
 
-static void	test_ft__read(const char *str)
+static void	test_ft_read(const char *str)
 {
 	char	buffer_one[BUFFER_SIZE];
 	char	buffer_two[BUFFER_SIZE];
@@ -132,7 +132,7 @@ static void	test_ft__read(const char *str)
 	memset(buffer_two, 'K', BUFFER_SIZE);
 
 	errno = 0;
-	ssize_t	ret_one = ft__read(fd_one, buffer_one, BUFFER_SIZE);
+	ssize_t	ret_one = ft_read(fd_one, buffer_one, BUFFER_SIZE);
 	int errno_one = errno;
 
 	errno = 0;
@@ -147,71 +147,71 @@ static void	test_ft__read(const char *str)
 	close(fd_two);
 }
 
-static void	tests_ft__strlen(void)
+static void	tests_ft_strlen(void)
 {
 
-	test_ft__strlen("");
-	test_ft__strlen("1");
-	test_ft__strlen("Hola");
-	test_ft__strlen("Hello, world!\n");
+	test_ft_strlen("");
+	test_ft_strlen("1");
+	test_ft_strlen("Hola");
+	test_ft_strlen("Hello, world!\n");
 }
 
-static void	tests_ft__strcmp(void)
+static void	tests_ft_strcmp(void)
 {
-	test_equal_ft__strcmp("");
-	test_equal_ft__strcmp("1");
-	test_equal_ft__strcmp("Hola");
-	test_equal_ft__strcmp("Hello, world!\n");
-	test_diff_ft__strcmp("", "1");
-	test_diff_ft__strcmp("", "");
-	test_diff_ft__strcmp("", "1124asdfasdfp;ap");
-	test_diff_ft__strcmp("1", "2");
-	test_diff_ft__strcmp("112141241414", "2");
-	test_diff_ft__strcmp("Hola", "H");
-	test_diff_ft__strcmp("Hello, world!\n", "Hello, 42!");
+	test_equal_ft_strcmp("");
+	test_equal_ft_strcmp("1");
+	test_equal_ft_strcmp("Hola");
+	test_equal_ft_strcmp("Hello, world!\n");
+	test_diff_ft_strcmp("", "1");
+	test_diff_ft_strcmp("", "");
+	test_diff_ft_strcmp("", "1124asdfasdfp;ap");
+	test_diff_ft_strcmp("1", "2");
+	test_diff_ft_strcmp("112141241414", "2");
+	test_diff_ft_strcmp("Hola", "H");
+	test_diff_ft_strcmp("Hello, world!\n", "Hello, 42!");
 }
 
-static void tests_ft__strcpy(void)
+static void tests_ft_strcpy(void)
 {
-	test_ft__strcpy("");
-	test_ft__strcpy("a");
-	test_ft__strcpy("Hello\n");
-	test_ft__strcpy("123456abc");
+	test_ft_strcpy("");
+	test_ft_strcpy("a");
+	test_ft_strcpy("Hello\n");
+	test_ft_strcpy("123456abc");
 }
 
-static void	tests_ft__strdup(void)
+static void	tests_ft_strdup(void)
 {
-	test_ft__strdup("");
-	test_ft__strdup("a");
-	test_ft__strdup("Hello\n");
-	test_ft__strdup("123456abc");
+	test_ft_strdup("");
+	test_ft_strdup("a");
+	test_ft_strdup("Hello\n");
+	test_ft_strdup("123456abc");
 }
 
-static void	tests_ft__write(void)
+static void	tests_ft_write(void)
 {
-	test_ft__write("", 1);
-	test_ft__write("a", 1);
-	test_ft__write("Hello", 1);
-	test_ft__write("123456abc", 1);
-	test_ft__write("Hello", 123456);
-	test_ft__write(NULL, 1000);
+	test_ft_write("", 1);
+	test_ft_write("a", 1);
+	test_ft_write("Hello", 1);
+	test_ft_write("123456abc", 1);
+	test_ft_write("Hello", 123456);
+	test_ft_write(NULL, 1000);
 }
 
-static void	tests_ft__read(void)
+static void	tests_ft_read(void)
 {
-	test_ft__read("main.c");
-	test_ft__read(NULL);
-	test_ft__read("hello");
+	test_ft_read("main.c");
+	test_ft_read(NULL);
+	test_ft_read("hello");
 }
 
 int		main(void)
 {
-	tests_ft__strlen();
-	tests_ft__strcmp();
-	tests_ft__strcpy();
-	tests_ft__strdup();
+	tests_ft_strlen();
+	tests_ft_strcmp();
+	tests_ft_strcpy();
+	tests_ft_strdup();
 	setbuf(stdout, NULL);
-	tests_ft__write();
-	tests_ft__read();
+	tests_ft_write();
+	tests_ft_read();
 	printf("All tests passed\n");
 }
