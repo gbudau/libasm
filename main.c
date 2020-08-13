@@ -6,7 +6,7 @@
 /*   By: gbudau <gbudau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 23:21:24 by gbudau            #+#    #+#             */
-/*   Updated: 2020/08/12 22:43:16 by gbudau           ###   ########.fr       */
+/*   Updated: 2020/08/13 20:29:22 by gbudau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 #include <errno.h>
 #include <unistd.h>
 #include "libasm.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #define BUFFER_SIZE 128
 
 static void	test_ft__strlen(const char *str)
@@ -118,6 +121,32 @@ static void	test_ft__write(const char *str, int fd)
 	assert(errno_one == errno_two);
 }
 
+static void	test_ft__read(const char *str)
+{
+	char	buffer_one[BUFFER_SIZE];
+	char	buffer_two[BUFFER_SIZE];
+	int		fd_one = open(str, O_RDONLY);
+	int		fd_two = open(str, O_RDONLY);
+
+	memset(buffer_one, 'K', BUFFER_SIZE);
+	memset(buffer_two, 'K', BUFFER_SIZE);
+
+	errno = 0;
+	ssize_t	ret_one = ft__read(fd_one, buffer_one, BUFFER_SIZE);
+	int errno_one = errno;
+
+	errno = 0;
+	ssize_t	ret_two = read(fd_two, buffer_two, BUFFER_SIZE);
+	int errno_two = errno;
+
+	assert(ret_one == ret_two);
+	assert(errno_one == errno_two);
+	assert(memcmp(buffer_one, buffer_two, BUFFER_SIZE) == 0);
+
+	close(fd_one);
+	close(fd_two);
+}
+
 static void	tests_ft__strlen(void)
 {
 
@@ -168,6 +197,13 @@ static void	tests_ft__write(void)
 	test_ft__write(NULL, 1000);
 }
 
+static void	tests_ft__read(void)
+{
+	test_ft__read("main.c");
+	test_ft__read(NULL);
+	test_ft__read("hello");
+}
+
 int		main(void)
 {
 	tests_ft__strlen();
@@ -176,5 +212,6 @@ int		main(void)
 	tests_ft__strdup();
 	setbuf(stdout, NULL);
 	tests_ft__write();
+	tests_ft__read();
 	printf("All tests passed\n");
 }
